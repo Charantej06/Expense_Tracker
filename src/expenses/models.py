@@ -20,6 +20,6 @@ class expense_model(SQLModel,table=True):
     currency : str = Field(default="rupees")
     category : str
     expense_date : date
-    created_at : datetime = Field(default=datetime.now)
-    updated_at : datetime = Field(default=datetime.now)
+    created_at : datetime = Field(default=datetime.now())
+    updated_at : datetime = Field(default=datetime.now())
     
