@@ -6,7 +6,6 @@ from .services import expense_service
 from .models import expense_model
 
 expense_service = expense_service()
-
 expense_router = APIRouter()
 
 @expense_router.get("/",response_model=list[expense_model],status_code=status.HTTP_200_OK)
@@ -36,5 +35,4 @@ async def delete_expense(expense_id:str,session:AsyncSession = Depends(get_sessi
     message = await expense_service.delete_expense(expense_id,session)
     if message is not None:
         return message
-    
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
