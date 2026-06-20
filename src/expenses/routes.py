@@ -16,10 +16,12 @@ async def get_all_expenses(session:AsyncSession = Depends(get_session)):
         return all_expenses
     raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
+
 @expense_router.post("/create",response_model=expense_model,status_code=status.HTTP_201_CREATED)
 async def create_expense(expense:createexpense,session:AsyncSession = Depends(get_session)):
     new_expense = await expense_service.create_expense(expense,session)
     return new_expense
+
 
 @expense_router.patch("/update",response_model=expense_model,status_code=status.HTTP_202_ACCEPTED)
 async def update_expense(expense_id:str,expense:updateexpense,session:AsyncSession = Depends(get_session)):

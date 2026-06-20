@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from src.config import config as app_config
 from sqlmodel import SQLModel
 from src.expenses.models import expense_model
+from src.auth.models import user_model
 
 from alembic import context
 
