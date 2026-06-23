@@ -4,12 +4,14 @@ from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from .services import expense_service
 from .models import expense_model
+from src.auth.dependencies import AccessTokenBearer
 
 expense_service = expense_service()
 expense_router = APIRouter()
+access_token_bearer = AccessTokenBearer()
 
 @expense_router.get("/",response_model=list[expense_model],status_code=status.HTTP_200_OK)
-async def get_all_expenses(session:AsyncSession = Depends(get_session)):
+async def get_all_expenses(session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
     all_expenses = await expense_service.get_all_expenses(session)
     if all_expenses is not None:
         return all_expenses
@@ -17,13 +19,13 @@ async def get_all_expenses(session:AsyncSession = Depends(get_session)):
 
 
 @expense_router.post("/create",response_model=expense_model,status_code=status.HTTP_201_CREATED)
-async def create_expense(expense:createexpense,session:AsyncSession = Depends(get_session)):
+async def create_expense(expense:createexpense,session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
     new_expense = await expense_service.create_expense(expense,session)
     return new_expense
 
 
 @expense_router.patch("/update",response_model=expense_model,status_code=status.HTTP_202_ACCEPTED)
-async def update_expense(expense_id:str,expense:updateexpense,session:AsyncSession = Depends(get_session)):
+async def update_expense(expense_id:str,expense:updateexpense,session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
     expense_to_update = await expense_service.update_expense(expense_id,expense,session)
     if expense_to_update is not None:
         return expense_to_update
@@ -31,7 +33,7 @@ async def update_expense(expense_id:str,expense:updateexpense,session:AsyncSessi
     
 
 @expense_router.delete("/delete",response_model=str,status_code=status.HTTP_200_OK)
-async def delete_expense(expense_id:str,session:AsyncSession = Depends(get_session)):
+async def delete_expense(expense_id:str,session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
     message = await expense_service.delete_expense(expense_id,session)
     if message is not None:
         return message
