@@ -1,7 +1,11 @@
-from sqlmodel import SQLModel,Field,Column
+from sqlmodel import SQLModel,Field,Column,Relationship
 import sqlalchemy.dialects.postgresql as pg
 import uuid
 from datetime import date,datetime
+from typing import Optional,TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.auth.models import user_model
+
 
 class expense_model(SQLModel,table=True):
     __tablename__ = "expenses"
@@ -19,7 +23,9 @@ class expense_model(SQLModel,table=True):
     amount : int
     currency : str = Field(default="rupees")
     category : str
+    user_uid: uuid.UUID = Field(foreign_key="User.uid",ondelete="CASCADE")
+    user : "user_model" = Relationship(back_populates="expenses",)
     expense_date : date
-    created_at : datetime = Field(default=datetime.now())
-    updated_at : datetime = Field(default=datetime.now())
+    created_at : datetime = Field(default_factory=datetime.now)
+    updated_at : datetime = Field(default_factory=datetime.now)
     

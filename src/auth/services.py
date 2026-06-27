@@ -3,6 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .schemas import create_user_schema,update_user_schema
 from .models import user_model
 from .utils import hash_pass
+from datetime import datetime
+import uuid
 
 class user_services:
 
@@ -13,7 +15,7 @@ class user_services:
         return user if user is not None else None
     
     async def get_user_by_id(self,id:str,session:AsyncSession):
-        statement = select(user_model).where(id==user_model.uid)
+        statement = select(user_model).where(uuid.UUID(id)==user_model.uid)
         result = await session.execute(statement)
         user = result.scalars().first()
         return user if user is not None else None
@@ -32,6 +34,7 @@ class user_services:
             return None
         for k,v in user.model_dump(exclude_unset=True).items():
             setattr(user_model_item,k,v)
+        setattr(user_model_item,"updated_at",datetime.now())   
         await session.commit()
         return user_model_item
     

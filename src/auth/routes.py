@@ -82,7 +82,7 @@ async def user_logout(session:AsyncSession = Depends(get_session),token_details:
 
 
 @auth_router.patch("/update",response_model=user_response_model,status_code=status.HTTP_200_OK)
-async def update_user(id:str,user:update_user_schema,session:AsyncSession = Depends(get_session)):
+async def update_user(id:str,user:update_user_schema,session:AsyncSession = Depends(get_session),token_details:dict = Depends(AccessTokenBearer())):
     updated_user = await user_services.update_user(id,user,session)
     if updated_user is not None:
         return updated_user
@@ -90,9 +90,10 @@ async def update_user(id:str,user:update_user_schema,session:AsyncSession = Depe
 
 
 @auth_router.delete("/delete",response_model=str,status_code=status.HTTP_200_OK)
-async def delete_user(id:str,session:AsyncSession = Depends(get_session)):
-    message = await user_services.delete_user(id,session)
+async def delete_user(session:AsyncSession = Depends(get_session),token_details:dict = Depends(AccessTokenBearer())):
+    message = await user_services.delete_user(token_details["user"]["user_id"],session)
     if message is not None:
+        await add_to_redis(jti=token_details['jti'])
         return message
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="user not exists")
     

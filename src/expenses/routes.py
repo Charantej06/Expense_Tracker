@@ -12,7 +12,7 @@ access_token_bearer = AccessTokenBearer()
 
 @expense_router.get("/",response_model=list[expense_model],status_code=status.HTTP_200_OK)
 async def get_all_expenses(session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
-    all_expenses = await expense_service.get_all_expenses(session)
+    all_expenses = await expense_service.get_all_expenses(token_details['user']["user_id"],session)
     if all_expenses is not None:
         return all_expenses
     raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
@@ -20,13 +20,13 @@ async def get_all_expenses(session:AsyncSession = Depends(get_session),token_det
 
 @expense_router.post("/create",response_model=expense_model,status_code=status.HTTP_201_CREATED)
 async def create_expense(expense:createexpense,session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
-    new_expense = await expense_service.create_expense(expense,session)
+    new_expense = await expense_service.create_expense(token_details['user']["user_id"],expense,session)
     return new_expense
 
 
 @expense_router.patch("/update",response_model=expense_model,status_code=status.HTTP_202_ACCEPTED)
 async def update_expense(expense_id:str,expense:updateexpense,session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
-    expense_to_update = await expense_service.update_expense(expense_id,expense,session)
+    expense_to_update = await expense_service.update_expense(token_details['user']["user_id"],expense_id,expense,session)
     if expense_to_update is not None:
         return expense_to_update
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
@@ -34,7 +34,7 @@ async def update_expense(expense_id:str,expense:updateexpense,session:AsyncSessi
 
 @expense_router.delete("/delete",response_model=str,status_code=status.HTTP_200_OK)
 async def delete_expense(expense_id:str,session:AsyncSession = Depends(get_session),token_details: dict = Depends(access_token_bearer)):
-    message = await expense_service.delete_expense(expense_id,session)
+    message = await expense_service.delete_expense(token_details['user']["user_id"],expense_id,session)
     if message is not None:
         return message
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
