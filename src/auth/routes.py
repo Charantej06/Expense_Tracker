@@ -7,7 +7,8 @@ from .models import user_model
 from .utils import verify_pass,encode_token,decode_token
 from fastapi.responses import JSONResponse,Response
 from datetime import timedelta
-from .dependencies import RefreshTokenBearer
+from .dependencies import RefreshTokenBearer,AccessTokenBearer
+from src.db.redis import add_to_redis
 
 REFRESH_TOKEN_EXPIRY = 86400
 
@@ -75,8 +76,9 @@ async def Refresh_token(session:AsyncSession = Depends(get_session),token_detail
     
 
 @auth_router.get("/logout")
-async def user_logout(session:AsyncSession = Depends(get_session)):
-    pass
+async def user_logout(session:AsyncSession = Depends(get_session),token_details:dict = Depends(AccessTokenBearer())):
+    await add_to_redis(jti=token_details['jti'])
+    return "Succesfully logged out"
 
 
 @auth_router.patch("/update",response_model=user_response_model,status_code=status.HTTP_200_OK)

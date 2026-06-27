@@ -6,7 +6,7 @@ from src.config import config
 import logging
 
 
-ACCESS_TOKEN_EXPIRY = 3600
+ACCESS_TOKEN_EXPIRY = 600
 
 # -------------------------------------------------------------------------------------
 password_hash = PasswordHash.recommended()
