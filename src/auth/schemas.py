@@ -30,3 +30,7 @@ class user_response_model(BaseModel):
     email: str
     password_hash: str = Field(exclude=True)
     created_at: datetime
+
+class verify_new_user_schema(BaseModel):
+    email : str
+    otp : str

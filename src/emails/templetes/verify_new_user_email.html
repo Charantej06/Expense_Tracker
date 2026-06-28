@@ -1,0 +1,381 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify your email – Expenzo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #f4f4f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrapper { padding: 48px 16px; }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #e4e4e7;
+    }
+
+    .header {
+      background: #09090b;
+      padding: 28px 40px;
+      text-align: center;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      background: #ffffff;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg { width: 18px; height: 18px; }
+
+    .logo-name {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .body { padding: 40px 40px 32px; }
+
+    .greeting {
+      font-size: 22px;
+      font-weight: 600;
+      color: #09090b;
+      letter-spacing: -0.4px;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      font-size: 15px;
+      color: #71717a;
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    .otp-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #a1a1aa;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 14px;
+    }
+
+    .otp-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .otp-digit {
+      width: 52px;
+      height: 60px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -1px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #f1f5f9;
+      margin: 0 0 24px;
+    }
+
+    .expiry-note {
+      font-size: 13px;
+      color: #94a3b8;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      line-height: 1.5;
+    }
+
+    .expiry-note svg { flex-shrink: 0; margin-top: 1px; }
+
+    .footer {
+      background: #f8fafc;
+      border-top: 1px solid #f1f5f9;
+      padding: 20px 40px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 520px) {
+      .header, .body, .footer { padding-left: 24px; padding-right: 24px; }
+      .otp-digit { width: 42px; height: 52px; font-size: 22px; }
+      .otp-row { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+
+      <div class="header">
+        <div class="logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 2L15.5 13H2.5L9 2Z" fill="#09090b"/>
+            </svg>
+          </div>
+          <span class="logo-name">Expenzo</span>
+        </div>
+      </div>
+
+      <div class="body">
+        <p class="greeting">Verify your email</p>
+        <p class="desc">
+          Enter the code below in the app to confirm your email address and activate your Expenzo account.
+        </p>
+
+        <p class="otp-label">Your one-time code</p>
+        <div class="otp-row">
+          <div class="otp-digit">{{d1}}</div>
+          <div class="otp-digit">{{d2}}</div>
+          <div class="otp-digit">{{d3}}</div>
+          <div class="otp-digit">{{d4}}</div>
+          <div class="otp-digit">{{d5}}</div>
+          <div class="otp-digit">{{d6}}</div>
+        </div>
+
+        <hr class="divider" />
+
+        <p class="expiry-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          This code expires in 10 minutes. If you didn't sign up for Expenzo, you can safely ignore this email.
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>Sent to <strong style="color:#64748b;">{{user_email}}</strong></p>
+        <p style="margin-top:4px;">© 2026 Expenzo · All rights reserved</p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify your email – Expenzo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #f4f4f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrapper { padding: 48px 16px; }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #e4e4e7;
+    }
+
+    .header {
+      background: #09090b;
+      padding: 28px 40px;
+      text-align: center;
+    }
+
+    /* table-based logo for email client compatibility */
+    .logo-table {
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    .logo-mark-cell {
+      width: 34px;
+      height: 34px;
+      background: #ffffff;
+      border-radius: 9px;
+      text-align: center;
+      vertical-align: middle;
+      padding: 0 8px 0 0;
+    }
+
+    .logo-name-cell {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .body { padding: 40px 40px 32px; }
+
+    .greeting {
+      font-size: 22px;
+      font-weight: 600;
+      color: #09090b;
+      letter-spacing: -0.4px;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      font-size: 15px;
+      color: #71717a;
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    .otp-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #a1a1aa;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    /* table-based OTP row for email client compatibility */
+    .otp-table {
+      margin: 0 auto 32px;
+      border-collapse: separate;
+      border-spacing: 10px 0;
+    }
+
+    .otp-digit {
+      width: 52px;
+      height: 60px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 26px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #f1f5f9;
+      margin: 0 0 24px;
+    }
+
+    .expiry-note {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .footer {
+      background: #f8fafc;
+      border-top: 1px solid #f1f5f9;
+      padding: 20px 40px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 520px) {
+      .header, .body, .footer { padding-left: 24px; padding-right: 24px; }
+      .otp-digit { width: 42px; height: 52px; font-size: 22px; }
+      .otp-table { border-spacing: 6px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+
+      <div class="header">
+        <table class="logo-table">
+          <tr>
+            <td class="logo-mark-cell">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 2L15.5 13H2.5L9 2Z" fill="#09090b"/>
+              </svg>
+            </td>
+            <td class="logo-name-cell">Expenzo</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="body">
+        <p class="greeting">Verify your email</p>
+        <p class="desc">
+          Enter the code below in the app to confirm your email address and activate your Expenzo account.
+        </p>
+
+        <p class="otp-label">Your one-time code</p>
+        <table class="otp-table">
+          <tr>
+            <td class="otp-digit">{{ d1 }}</td>
+            <td class="otp-digit">{{ d2 }}</td>
+            <td class="otp-digit">{{ d3 }}</td>
+            <td class="otp-digit">{{ d4 }}</td>
+            <td class="otp-digit">{{ d5 }}</td>
+            <td class="otp-digit">{{ d6 }}</td>
+          </tr>
+        </table>
+
+        <hr class="divider" />
+
+        <p class="expiry-note">
+          This code expires in 10 minutes. If you didn't sign up for Expenzo, you can safely ignore this email.
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>Sent to <strong style="color:#64748b;">{{ user_email }}</strong></p>
+        <p style="margin-top:4px;">© 2026 Expenzo · All rights reserved</p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

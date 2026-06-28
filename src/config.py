@@ -5,7 +5,7 @@ class settings(BaseSettings):
     JWT_SECRET : str
     JWT_ALGORITHM : str
     REDIS_URL : str
-
+    RESEND_API_KEY : str
     model_config = SettingsConfigDict(env_file='.env',extra='ignore')
 
 config = settings()    

@@ -1,7 +1,7 @@
 from fastapi.security import HTTPBearer
 from .utils import decode_token
 from fastapi import HTTPException,status,Request
-from src.db.redis import check_in_redis
+from src.db.redis import check_jti_in_redis
 
 class TokenBearer(HTTPBearer):
 
@@ -14,7 +14,7 @@ class TokenBearer(HTTPBearer):
         token_details = decode_token(token)
         if not token_details:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid or Expired token")
-        if await check_in_redis(token_details['jti']):
+        if await check_jti_in_redis(token_details['jti'],email=token_details['user']['email']):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Acessing logged out user")
         self.verify_token(token_details)
         return token_details
