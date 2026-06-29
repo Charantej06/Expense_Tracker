@@ -17,7 +17,9 @@ from src.db.redis import (add_jti_to_redis,
                           add_otp_to_redis,
                           check_otp_in_redis,
                           add_userdata_to_redis,
-                          check_userdata_in_redis)
+                          check_userdata_in_redis,
+                          remove_otp_from_redis,
+                          remove_userdata_from_redis)
 from src.emails.send_mails import send_verificatin_mail
 
 REFRESH_TOKEN_EXPIRY = 86400
@@ -50,9 +52,11 @@ async def verify_new_user_email(data:verify_new_user_schema,session:AsyncSession
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="OTP Expired")
     if redis_otp != data.otp:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Invalid OTP")
+    await remove_otp_from_redis(msg="verify",email=data.email)
     user_data = await check_userdata_in_redis(email=data.email)
     if user_data is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="User data Expired")
+    await remove_userdata_from_redis(email=data.email)
     user = create_user_schema.model_validate_json(user_data)
     new_user = await user_services.create_user(user,session)
     return new_user
