@@ -4,7 +4,9 @@ from .schemas import (create_user_schema,
                       update_user_schema,
                       user_response_model,
                       verify_new_user_schema,
-                      reset_password_schema)
+                      reset_password_schema,
+                      forgetpassword_schema,
+                      verify_forgetpassword_schema)
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from .services import user_services
@@ -132,6 +134,31 @@ async def reset_password(data:reset_password_schema,session:AsyncSession = Depen
     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid Old Password")
 
 
+
+@auth_router.post("/forgetpassword")
+async def forgetpassword(data:forgetpassword_schema,session:AsyncSession = Depends(get_session)):
+    user = user_services.get_user_by_email(data.email,session)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="user not exists")
+    otp = send_verificatin_mail(data.email)
+    await add_otp_to_redis(msg="forgetpassword",email=data.email,otp=otp)
+
+
+@auth_router.post("/verifyforgetpassword")
+async def verifyforgetpassword(data:verify_forgetpassword_schema,session:AsyncSession = Depends(get_session)):
+    new_user = await user_services.get_user_by_email(data.email,session)
+    if new_user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="user not found")
+    redis_otp = await check_otp_in_redis(msg="forgetpassword",email=data.email)
+    if redis_otp is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="OTP Expired")
+    if redis_otp != data.otp:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Invalid OTP")
+    await remove_otp_from_redis(msg="verify",email=data.email)
+    new_user.password_hash = hash_pass(data.new_password)
+    await session.commit()
+
+    
 
 @auth_router.patch("/update",response_model=user_response_model,status_code=status.HTTP_200_OK)
 async def update_user(id:str,user:update_user_schema,session:AsyncSession = Depends(get_session),token_details:dict = Depends(AccessTokenBearer())):

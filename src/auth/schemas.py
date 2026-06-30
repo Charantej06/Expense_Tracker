@@ -41,3 +41,9 @@ class reset_password_schema(BaseModel):
     old_password : str
     new_password : str
     confirm_password :str
+
+class forgetpassword_schema(BaseModel):
+    email:str  
+
+class verify_forgetpassword_schema(verify_new_user_schema):
+    new_password : str
